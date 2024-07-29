@@ -1,0 +1,350 @@
+{% extends 'landbook/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+
+
+{% block title %} | Notifications  {% endblock %}
+
+{% block content1 %}
+<br><br>
+
+  <!-- <script src="https://kit.fontawesome.com/fc1e235b2e.js"></script> -->
+  <link rel="stylesheet" href="{% static 'assets2/style.css' %}">
+  <style>
+    #noti_id .container{
+      width: 100%;
+      max-width: 35rem;
+      margin-top: 1rem;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+    }
+    
+    #noti_id .form-data{
+      
+      width: 100%;
+      max-width: 35rem;
+      margin-top: 1rem;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+    
+    }
+    #noti_id .form-data form {
+        background-color: #fff;
+        border: 2px solid #eee;
+        display: flex;
+        flex-direction: column;
+        padding: 2rem 1rem;
+        text-align: left;
+    }
+    #noti_id .side-menu__user-profile{
+      display: flex;
+      align-items: center;
+
+      margin: 20px 0 22px;
+    }
+    #noti_id .side-menu__user-profile{
+      display: flex;
+      align-items: center;
+
+      margin: 20px 0 22px;
+    }
+    #noti_id .side-menu__user-avatar {
+    width: 50px;
+    
+    border-radius: 50%;
+
+    margin-right: 12px;
+    flex-shrink: 0;
+
+    overflow: hidden;
+    position: relative;
+    }
+    #noti_id .side-menu__user-avatar::after {
+        content: '';
+        position: absolute;
+        top: 0; bottom: 0;
+        left: 0; right: 0;
+
+        border: 1px solid var(--img-border);
+        border-radius: 50%;
+    }
+    #noti_id .side-menu__user-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        flex: 1;
+        gap: 4px;
+    }
+    #noti_id .side-menu__user-info a {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-dark);
+        text-decoration: none;
+
+        max-width: 180px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    #noti_id .side-menu__user-info span {
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--text-light);
+
+        max-width: 180px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    #noti_id .side-menu__user-button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--link);
+
+        flex-shrink: 0;
+    }
+
+    #noti_id .side-menu__suggestions-section {
+        display: flex;
+        flex-direction: column;
+    }
+    #noti_id .side-menu__suggestions-header {
+        display: flex;
+        justify-content: space-between;
+    }
+    #noti_id .side-menu__suggestions-header h2 {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-light);
+    }
+    #noti_id .side-menu__suggestions-header button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-dark);
+    }
+
+    #noti_id .side-menu__suggestions-content {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        margin: 16px 0 24px;
+        padding-left: 4px;
+    }
+    #noti_id .side-menu__suggestion {
+        display: flex;
+        align-items: center;
+    }
+    #noti_id .side-menu__suggestion-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+
+        margin-right: 12px;
+        flex-shrink: 0;
+
+        overflow: hidden;
+        position: relative;
+    }
+    #noti_id .side-menu__suggestion-avatar::after {
+        content: '';
+        position: absolute;
+        top: 0; bottom: 0;
+        left: 0; right: 0;
+
+        border: 1px solid var(--img-border);
+        border-radius: 50%;
+    }
+    #noti_id .side-menu__suggestion-info {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        flex: 1;
+        gap: 2px;
+    }
+    #noti_id .side-menu__suggestion-info a {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-dark);
+        text-decoration: none;
+
+        max-width: 180px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    #noti_id .side-menu__suggestion-info a:hover {
+        text-decoration: underline;
+    }
+    #noti_id .side-menu__suggestion-info span {
+        font-size: 12px;
+        font-weight: 400;
+        color: var(--text-light);
+
+        max-width: 180px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    #noti_id .side-menu__suggestion-button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--link);
+
+        flex-shrink: 0;
+    }
+
+    #noti_id .side-menu__footer {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+    #noti_id .side-menu__footer-links {
+        display: flex;
+    }
+    #noti_id .side-menu__footer-list {
+        list-style: none;
+    }
+    #noti_id .side-menu__footer-item {
+        display: inline-block;
+    }
+    #noti_id .side-menu__footer-item:not(:last-of-type)::after {
+        content: '\00B7';
+        margin: 0 0.5px;
+    }
+    #noti_id .side-menu__footer-item,
+    .side-menu__footer-link,
+    .side-menu__footer-copyright {
+        font-size: 11px;
+        font-weight: 400;
+        color: var(--text-light);
+        text-decoration: none;
+    }
+    #noti_id  .side-menu__footer-copyright {
+        text-transform: uppercase;
+    }
+
+
+  </style>
+  
+
+
+  <section id="noti_id">
+    <div class="container">
+      <div class="phone-app-ddemo"></div>
+      <div class="form-data">
+        
+    
+
+        <form action="" method="POST" enctype="multipart/form-data">
+          <div class="logo">
+            <h3 style="padding-top: 5px; font-size: 20px;">Notifications</h3>
+          </div>
+
+            <!-- First Section -->
+            {% for notification in notifications %}
+                
+                {% if notification.notification_types == 1 %}
+                    <div class="alert alert-white alert-dismissible fade show" role="alert" style="border: 1px rgba(219, 219, 219, 0.699) solid; border-radius: 25px;">
+                        <div class="side-menu__user-profile" >
+                            <a href="{% url 'profile' user.username %}" class="side-menu__user-avatar">
+                                {% if notification.sender.profile.image %}
+                                    <img src="{{ notification.sender.profile.image.url }}" alt="User Picture">
+                                {% else %}
+                                    <img src="{% static 'assets1/default.jpg' %}" alt="User Picture">
+                                {% endif %}
+                            </a>
+                            <div class="side-menu__user-idnfo" style="text-align: start;">
+                                <a href="{% url 'profile' user.username %}" style="font-size: 15px; color: black; text-align: center;">{{ notification.sender.profile.first_name|title }} {{ notification.sender.profile.last_name|title }}</a> <br>
+                                <a href="{% url 'profile' user.username %}" style="font-size: 15px; color: black; text-align: center;"><b><i class="bi bi-hand-thumbs-up-fill" style="color: blue;"></i> Liked you Picture</b></a> <br>
+                                <a href="{% url 'profile' user.username %}" style="font-size: 10px; color: rgb(75, 75, 75); ">{{ notification.date }}</a>
+
+                            </div>
+                            <a href="{% url 'profile' user.username %}" class="side-menu__user-avatar" style="margin-left: 20px;">
+                                <img src="{{ notification.post.picture.url }}" alt="User Picture">
+                            </a>
+                        </div>
+                        <a href="{% url 'delete-notification' notification.id %}" type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
+                      </div>
+                {% endif %}
+                
+                {% if notification.notification_types == 3 %}
+                    <div class="alert alert-white alert-dismissible fade show" role="alert" style="border: 1px rgba(219, 219, 219, 0.699) solid; border-radius: 25px;">
+                        <div class="side-menu__user-profile">
+                            <a href="{% url 'profile' user.username %}" class="side-menu__user-avatar">
+                                {% if notification.sender.profile.image %}
+                                    <img src="{{ notification.sender.profile.image.url }}" alt="User Picture">
+                                {% else %}
+                                    <img src="{% static 'assets1/default.jpg' %}" alt="User Picture">
+                                {% endif %}
+                            </a>
+                            <div class="side-menu__user-idnfo" style="text-align: start;">
+                                <a href="{% url 'profile' user.username %}" style="font-size: 15px; color: black; text-align: center;">{{ notification.sender.profile.first_name|title }} {{ notification.sender.profile.last_name|title }}</a> <br>
+                                <a href="{% url 'profile' user.username %}" style="font-size: 15px; color: black; text-align: center;"><b><i class="bi bi-hand-thumbs-up-fill" style="color: blue;"></i> Liked you Picture</b></a> <br>
+                                <a href="{% url 'profile' user.username %}" style="font-size: 10px; color: rgb(75, 75, 75); ">{{ notification.date }}</a>
+                            </div>
+                        </div>
+                        <a href="{% url 'delete-notification' notification.id %}" type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
+                      </div>
+                {% endif %}
+
+
+                {% if notification.notification_types == 2 %}
+                <div class="alert alert-white alert-dismissible fade show" role="alert" style="border: 1px rgba(219, 219, 219, 0.699) solid; border-radius: 25px;">
+                  <div class="side-menu__user-profile">
+
+                    <a href="{% url 'profile' user.username %}" class="side-menu__user-avatar">
+                      {% if notification.sender.profile.image %}
+                          <img src="{{ notification.sender.profile.image.url }}" alt="User Picture">
+                      {% else %}
+                          <img src="{% static 'assets1/default.jpg' %}" alt="User Picture">
+                      {% endif %}
+                    </a>
+                     
+                      <div class="side-menu__user-idnfo" style="text-align: start;">
+                        <a href="{% url 'profile' user.username %}" style="font-size: 15px; color: black; text-align: center;">{{ notification.sender.profile.first_name|title }} {{ notification.sender.profile.last_name|title }}</a> <br>
+                        <a href="{% url 'profile' user.username %}" style="font-size: 15px; color: black; text-align: center;"><b><i class="bi bi-chat-dots-fill" style="color: rgb(252, 122, 1);"></i> Commented on your post</b></a> <br>
+                        <a href="{% url 'profile' user.username %}" style="font-size: 10px; color: rgb(75, 75, 75); ">{{ notification.date }}</a>
+                      </div>
+
+                      <a href="{% url 'profile' user.username %}" class="side-menu__user-avatar" style="margin-left: 20px;">
+                        <img src="{{ notification.post.picture.url }}" alt="User Picture">
+                      </a>
+                  </div>
+                  <a href="{% url 'delete-notification' notification.id %}" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
+              </div>
+                {% endif %}
+
+            {% endfor %}
+
+            <!-- third Section -->
+
+            
+
+        </form>
+
+
+      </div>
+    </div>
+
+    
+  </section>
+
+
+{% endblock content1 %}

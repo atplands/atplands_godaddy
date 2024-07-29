@@ -1,0 +1,267 @@
+{% load static %}
+
+<style>
+  .post-header__atp-link{
+    width:108px;
+    height: 24px;
+    margin: 0px 0 0;
+	  cursor: pointer;
+    text-align: center;
+    border-radius: 16px;
+    background-color: #fff;
+    color: #303030;
+    font-size: 12px;
+    line-height: 24px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+  }
+  .badge{
+    display: inline-block;
+    padding: 1px 5px;
+    border-radius: 9px;
+    background-color: orange;
+    font-size: 8px;
+    line-height: 12px;
+    text-transform: uppercase;
+    position: absolute;
+    top: -10px;
+    right: 0;
+  }
+  .dropdown-menu:hover .dropdown-item {
+    
+    color: orange;
+
+  }
+
+</style>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top">
+    <div class="container-fluid">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'index' %}">
+        <i style="background-color:DodgerGreen; color:white;text-transform: lowercase;font-size:none ;font-family:'AmstelvarAlpha';
+  		font-style: oblique 23deg;font: 1.5rem 'AmstelvarAlpha', sans-serif; position:relavent;height:10px; width:100%" >ATPLands</i>
+      </a>       
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <ul class="navbar-nav">         
+          <li
+            {% if '/' == request.path %}
+              class="nav-item active me-3"
+            {% else %}
+              class="nav-item me-3"
+            {% endif %}
+          >
+            <a class="nav-link" href="{% url 'index' %}">Home</a>
+          </li>
+          
+	  <li
+            {% if 'videos' in request.path %}
+              class="nav-item active me-3"
+            {% else %}
+              class="nav-item me-3"
+            {% endif %}
+          >
+            <a class="nav-link" href="{% url 'videos' %}" > LandVideos
+	          </a>  
+          </li>
+	  <li
+            {% if 'maps' in request.path %}
+              class="nav-item active me-3"
+            {% else %}
+              class="nav-item me-3"
+            {% endif %}
+          >
+            <a class="nav-link" href="{% url 'maps' %}">LandMaps </a>  
+          </li>
+
+
+	  
+	  
+          <li 
+                    {% if 'post' in request.path %}
+                      class="nav-item active me-3"
+                    {% else %}
+                      class="nav-item me-3"
+                    {% endif %}
+		>
+
+                    {% if user.is_authenticated %}
+                     <a class="nav-link" href="{% url 'lb_login_index' %}"
+                    {% else %}
+                    <a class="nav-link"  href="{% url 'landbook_index' %}"
+                    {% endif %}>
+                      InstaFollowers</a>
+           </li>
+          
+        
+          
+          
+          
+            
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          {% if user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown">   
+              <i class="fas fa-user-circle bg-success" style='font-size:40px;' aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu bg-success border-0">
+              
+              
+	      <li ><a 
+                      {% if 'dashboard' in request.path %}
+                      class="dropdown-item text-warning  me-3"
+                      {% else %}
+                        class="dropdown-item text-info  me-3"
+                      {% endif %}
+                        href="{% url 'dashboard' %}" > {{ "Dashboard" }} </a>
+              </li>
+              <li class="dropdown-divider ">
+              </li>
+              <li><a class="dropdown-item text-white me-3" href="javascript:{document.getElementById('logout').submit()}">  <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                    <form action="{% url 'logout' %}" method="POST" id="logout">
+                      {% csrf_token %}
+                      <input type="hidden">
+                    </form>
+              </li>
+            </ul>
+               
+          </li>
+          {% else %}             
+          <li class="nav-item ">
+            <a class="nav-link me-3" href="#" data-toggle="modal" data-target="#loginModal"><i class="fas fa-sign-in-alt "> login</i>
+            </a>
+          </li>
+          {% endif %} 
+        </ul>
+      </div>
+      <div class="post-header__atp-link"  data-toggle="modal" data-target="#adModal">Post Property
+            <span class="badge" >Free</span>                   
+          
+      </div>
+
+      
+    </div>
+  </nav>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title " id="loginModalLabel"> 
+          
+            <i style="background-color:DodgerGreen; color:white;text-transform: lowercase;font-size:none ;font-family:'AmstelvarAlpha';
+          font-style: oblique 23deg;font: 1.5rem 'AmstelvarAlpha', sans-serif; position:relavent;height:10px; width:100%" ></i>ATPLands.com
+          
+        </h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+          
+              <div class="card">
+                <div class="card-header bg-primary text-white">
+                  <h4>
+                    <i class="fas fa-sign-in-alt"></i> Login
+		  </h4>
+		  {% load socialaccount %}
+		  <div class="social-container">
+				<a href="{% provider_login_url 'google' %}?next=/" class="social"><i class="fab fa-google-plus-g"></i></a>				
+		  </div>
+
+                </div>
+                <div class="card-body">
+                  <!-- Alerts -->
+                  {% include 'partials/_alerts.html' %}
+                    <form action="{% url 'login' %}" method="POST">
+                      {% csrf_token %}
+                      <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" class="form-control" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="password2">Password</label>
+                        <input type="password" name="password" class="form-control" required>
+                      </div>
+                      <input type="submit" value="Login" class="btn btn-secondary btn-block">
+                      <!-- Register buttons -->
+                      <div class="text-center">
+                        <p>Not a member? <a href="{% url 'register' %}">Register</a></p>
+                      </div>
+                    </form>                
+                </div>
+              </div>
+                  
+      </div>
+    </div>
+  </div>
+</div>  
+
+<!-- Post Ad Modal -->
+<div class="modal fade" id="adModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="inquiryModalLabel">Post Property</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {% include 'partials/_alerts.html' %}
+        <form action="{% url 'postad' %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% if user.is_authenticated %}
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+          {% else %}
+            <input type="hidden" name="user_id" value="0">
+          {% endif %}
+          <div class="form-group">
+            <select name="owner_type" class="form-control">
+              <option selected="true" disabled="disabled">Owner</option>
+              <option value="Owner" selected>Owner</option>
+              <option value="Agent">Agent</option>
+            </select>            
+          </div>
+          <div class="form-group">
+            <input type="text" name="name" placeholder="Owner name" class="form-control" {% if user.is_authenticated %} value="{{ user.first_name }} {{ user.last_name }}" {% endif %} required>
+          </div>
+          <div class="form-group">
+            <input type="email" name="email" placeholder="email" class="form-control" {% if user.is_authenticated %} value="{{ user.email }}" {% endif %} required>
+          </div>
+          <div class="form-group">
+            <input type="text" name="phone" placeholder="Phone" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <input type="text" name="title" class="form-control" placeholder="Property Title " required>
+          </div>
+          <div class="form-group">
+            <input type="text" name="address" class="form-control" placeholder="Property address " required >
+          </div>
+          <div class="form-group">
+            <textarea name="message" class="form-control" placeholder="Property details " ></textarea>
+          </div>
+          <input type="file" name="photo_main" required>
+          <hr>
+          <input type="submit" value="Upload Property" class="btn btn-block btn-secondary">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>  
+
+<script>
+  $(document).ready(function () {
+    var url = window.location;
+    $('ul.navbar-nav a[href="'+ url +'"]').parents('.nav-item').addClass('active');
+  });
+</script>

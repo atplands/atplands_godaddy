@@ -1,0 +1,842 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block title %} | Anantapur {% endblock %}
+
+{% block content %}
+
+<!--Search Section Started-->
+
+
+<!-- mySwiper Cards Slide show-->
+
+<section id="mySwiper_cards">
+    <div class="swiper mySwiper container swiper-container">
+        <div class="swiper-wrapper content">
+            <!--Start ATP Search Slider-->
+            <div class="swiper-slide card">
+                <div class="card-content">
+                    <div class="image">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Revenue_divisions_map_of_Anantapur_district.png" alt="">
+                    </div>
+                    <div class="name-profession">
+                      <span class="name">Anantapur Lands Houses </span>
+                      <span class="profession">Pick your perfect piece of Property</span>
+                    </div>
+                    <form action="{% url 'search' %}">
+                      <!-- Form Row 1 -->
+                      <div class="form-row">
+                        <div class="col-md-12 mb-1">
+                            <div class="input-group">
+                                <input type="search" name="keywords" class="form-control" placeholder="Location..">
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-1">
+                          <label class="sr-only">Mandals</label>
+                          <select name="type" class="form-control">
+                            <option selected="true" disabled="disabled">Mandals</option>
+                            <option value="" selected>All Divisions</option>
+                            {% for key,value in devision_choices.items %}
+                              <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        <div class="col-md-6 mb-1">
+                          <label class="sr-only">Lands</label>
+                          <select name="type" class="form-control">
+                            <option selected="true" disabled="disabled">Lands</option>
+                            <option value="">All Lands</option>
+                            {% for key,value in type_choices.items %}
+                              <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                          <div class="input-group">
+                              <select name="price" class="form-control" id="type">
+                                <option selected="true" disabled="disabled">Price</option>
+                                <option value="">All Prices</option>
+                                {% for key,value in price_choices.items %}
+                                  <option value="{{ key }}">{{ value }}</option>
+                                {% endfor %}
+                              </select>
+                              <div class="input-group-append">
+                                        <button class="btn btn-secondary mt-0" type="submit"><i class="fa fa-search"></i>Search</button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+            </div>
+            <!--End ATP Search Slider-->
+            <!-- Start ATP Urban Slider-->
+            <div class="swiper-slide card">
+                <div class="card-content">
+                    <div class="image">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5Q8WrNMR6HhF1rxCV2iQK3Ivwm95gl0fTxQ&usqp=CAU" alt="">
+                    </div>
+                    <div class="name-profession">
+                      <span class="name">Anantapur Urban</span>
+                      <span class="profession">Search Lands in Urban</span>
+                    </div>
+                    <form action="{% url 'search' %}">
+                      <!-- Form Row 1 -->
+                      <div class="form-row">
+                        <div class="col-md-12 mb-1">
+                          <select name="state" class="form-control" id="type">
+                            <option selected="true" disabled="disabled" value="">Mandals</option>
+                            <option value="AUM" selected>All Mandals</option>
+                            <option value="ATP">Anantapuram</option>
+                          </select>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                          <label class="sr-only">Lands</label>
+                          <select name="type" class="form-control">
+                            <option selected="true" disabled="disabled">Lands</option>
+                            <option value="">All Lands</option>
+                            {% for key,value in type_choices.items %}
+                              <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                          <div class="input-group">
+                              <select name="price" class="form-control" id="type">
+                                <option selected="true" disabled="disabled">Price</option>
+                                <option value="">All Prices</option>
+                                {% for key,value in price_choices.items %}
+                                  <option value="{{ key }}">{{ value }}</option>
+                                {% endfor %}
+                              </select>
+                              <div class="input-group-append">
+                                        <button class="btn btn-secondary mt-0" type="submit"><i class="fa fa-search"></i> Search</button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+            </div>
+            <!--End ATP Urban Slider -->
+
+            <div class="swiper-slide card">
+                <div class="card-content">
+                    <div class="image">
+                        <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIPnmKWmUPyvNTMZ-0Q0yze2O24zJ-Ys3uWeJ9Ayv74N464JfkfjaIaNXPFMIzm13a-60&usqp=CAU" alt="">
+                    </div>
+                    <div class="name-profession">
+                      <span class="name">Anantapur Rural</span>
+                      <span class="profession">Search Lands in Rural</span>
+                    </div>
+                    <form action="{% url 'search' %}">
+                      <!-- Form Row 1 -->
+                      <div class="form-row">
+                        <div class="col-md-12 mb-1">
+                          <select name="state" class="form-control" id="type">
+                            <option selected="true" disabled="disabled" value="">Mandals</option>
+                            <option value="ARM" selected>All Mandals</option>
+                            <option value="GRD">Garladinne</option>
+                            <option value="RT">Raptadu</option>
+                            <option value="BS">BK.Samudram</option>
+                            <option value="KDR">Kudair</option>
+                            <option value="AK">Atmakur</option>
+                            <option value="SGM">Singanamala</option>
+                          </select>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                          <label class="sr-only">Lands</label>
+                          <select name="type" class="form-control">
+                            <option selected="true" disabled="disabled">Lands</option>
+                            <option value="">All Lands</option>
+                            {% for key,value in type_choices.items %}
+                              <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                          <div class="input-group">
+                              <select name="price" class="form-control" id="type">
+                                <option selected="true" disabled="disabled">Price</option>
+                                <option value="">All Prices</option>
+                                {% for key,value in price_choices.items %}
+                                  <option value="{{ key }}">{{ value }}</option>
+                                {% endfor %}
+                              </select>
+                              <div class="input-group-append">
+                                        <button class="btn btn-secondary mt-0" type="submit"><i class="fa fa-search"></i> Search</button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="swiper-slide card">
+                <div class="card-content">
+                    <div class="image">
+                        <img class="card-img-top" src="https://assets.thehansindia.com/hansindia-bucket/4941_ADARANA-POLYTECHNIC.jpg" alt="">
+                    </div>
+                    <div class="name-profession">
+                      <span class="name">Raptadu</span>
+                      <span class="profession">Search Lands in Division</span>
+                    </div>
+                    <form action="{% url 'search' %}">
+                      <!-- Form Row 1 -->
+                      <div class="form-row">
+                        <div class="col-md-12 mb-1">
+                          <select name="state" class="form-control" id="type">
+                            <option selected="true" disabled="disabled" value="">Mandals</option>
+                            <option value="RTM" selected>All Mandals</option>
+                            <option value="RT">Raptadu</option>
+                            <option value="AK">Atmakur</option>
+                            <option value="KP">Kanaganapalli</option>
+                            <option value="CKP">CK.Palli</option>
+                            <option value="RMG">Ramagiri</option>
+                            <option value="ATP">Anantapur</option>
+                          </select>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                          <label class="sr-only">Lands Type</label>
+                          <select name="type" class="form-control">
+                            <option selected="true" disabled="disabled">Lands</option>
+                            <option value="">All Lands</option>
+                            {% for key,value in type_choices.items %}
+                              <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                          <div class="input-group">
+                              <select name="price" class="form-control" id="type">
+                                <option selected="true" disabled="disabled">Price</option>
+                                <option value="">All Prices</option>
+                                {% for key,value in price_choices.items %}
+                                  <option value="{{ key }}">{{ value }}</option>
+                                {% endfor %}
+                              </select>
+                              <div class="input-group-append">
+                                        <button class="btn btn-secondary mt-0" type="submit"><i class="fa fa-search"></i> Search</button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="swiper-slide card">
+                <div class="card-content">
+                    <div class="image">
+                        <img class="card-img-top" src="https://www.google.com/maps/vt/data=O9rCG2lDB0u8oamRgNYd1WupLkpH5KNwAHLhYiy_dhlFwAKoj-VAn8b6cbuJBOhMjEaRdDohTMfuSJ5PPpyMpdHq82JVvvlRWP_7wUdxrNieJW26pep_FXdBw2DZ3rgqzfV0Z06JqfGwBh8Q0WcH8ZrhOCRqQ4fQp6zu16CJWUhy4RzE05Czy7DW_RWH8cKUJfpS2pZf2PuoFEF4RUfdUe1T5XBQSNc6QiEfqZQXyheK-TPyH6GU" alt="">
+                    </div>
+                    <div class="name-profession">
+                      <span class="name">Singanamala</span>
+                      <span class="profession">Search Lands in Division</span>
+                    </div>
+                    <form action="{% url 'search' %}">
+                      <!-- Form Row 1 -->
+                      <div class="form-row">
+                        <div class="col-md-12 mb-1">
+                          <select name="state" class="form-control" id="type">
+                            <option selected="true" disabled="disabled" value="">Mandals</option>
+                            <option value="SMM" selected>All Mandals</option>
+                            <option value="SGM">Singanamala</option>
+                            <option value="NP">Narpala</option>
+                            <option value="GRD">Garladinne</option>
+                            <option value="BS">BK.Samudram</option>
+                          </select>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                          <label class="sr-only">Lands Type</label>
+                          <select name="type" class="form-control">
+                            <option selected="true" disabled="disabled">Lands</option>
+                            <option value="">All Lands</option>
+                            {% for key,value in type_choices.items %}
+                              <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                          <div class="input-group">
+                              <select name="price" class="form-control" id="type">
+                                <option selected="true" disabled="disabled">Price</option>
+                                <option value="">All Prices</option>
+                                {% for key,value in price_choices.items %}
+                                  <option value="{{ key }}">{{ value }}</option>
+                                {% endfor %}
+                              </select>
+                              <div class="input-group-append">
+                                        <button class="btn btn-secondary mt-0" type="submit"><i class="fa fa-search"></i> Search</button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+            </div>
+            <div class="swiper-slide card">
+                <div class="card-content">
+                    <div class="image">
+                        <img class="card-img-top" src="https://assets.thehansindia.com/hansindia-bucket/6059_Untitled-3.jpg" alt="">
+                    </div>
+                    <div class="name-profession">
+                      <span class="name">Tadipatri</span>
+                      <span class="profession">Search Lands in Division</span>
+                    </div>
+                    <form action="{% url 'search' %}">
+                      <!-- Form Row 1 -->
+                      <div class="form-row">
+                        <div class="col-md-12 mb-1">
+                          <select name="state" class="form-control" id="type">
+                            <option selected="true" disabled="disabled" value="">Mandals</option>
+                            <option value="TPM" selected>All Mandals</option>
+                            <option value="TP">Tadipatri</option>
+                            <option value="PVG">Peddavadugur</option>
+                            <option value="YD">Yadiki</option>
+                            <option value="PP">Peddapappur</option>
+                          </select>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                          <label class="sr-only">Lands Type</label>
+                          <select name="type" class="form-control">
+                            <option selected="true" disabled="disabled">Lands</option>
+                            <option value="">All Lands</option>
+                            {% for key,value in type_choices.items %}
+                              <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                          <div class="input-group">
+                              <select name="price" class="form-control" id="type">
+                                <option selected="true" disabled="disabled">Price</option>
+                                <option value="">All Prices</option>
+                                {% for key,value in price_choices.items %}
+                                  <option value="{{ key }}">{{ value }}</option>
+                                {% endfor %}
+                              </select>
+                              <div class="input-group-append">
+                                        <button class="btn btn-secondary mt-0" type="submit"><i class="fa fa-search"></i> Search</button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+            </div>
+            <div class="swiper-slide card">
+                <div class="card-content">
+                    <div class="image">
+                        <img class="card-img-top" src="data:image/jpeg;base64,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" alt="">
+                    </div>
+                    <div class="name-profession">
+                      <span class="name">Guntakal</span>
+                      <span class="profession">Search Lands in Division</span>
+                    </div>
+                    <form action="{% url 'search' %}">
+                      <!-- Form Row 1 -->
+                      <div class="form-row">
+                        <div class="col-md-12 mb-1">
+                          <select name="state" class="form-control" id="type">
+                            <option selected="true" disabled="disabled" value="">Mandals</option>
+                            <option value="GKM" selected>All Mandals</option>
+                            <option value="GTK">Guntakal</option>
+                            <option value="GTY">Gooty</option>
+                            <option value="PMD">Pamidi</option>
+                          </select>
+                        </div>
+
+                        <div class="col-md-12 mb-1">
+                          <label class="sr-only">Lands Type</label>
+                          <select name="type" class="form-control">
+                            <option selected="true" disabled="disabled">Lands</option>
+                            <option value="">All Lands</option>
+                            {% for key,value in type_choices.items %}
+                              <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                          <div class="input-group">
+                              <select name="price" class="form-control" id="type">
+                                <option selected="true" disabled="disabled">Price</option>
+                                <option value="">All Prices</option>
+                                {% for key,value in price_choices.items %}
+                                  <option value="{{ key }}">{{ value }}</option>
+                                {% endfor %}
+                              </select>
+                              <div class="input-group-append">
+                                        <button class="btn btn-secondary mt-0" type="submit"><i class="fa fa-search"></i> Search</button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+            </div>
+            <div class="swiper-slide card">
+                <div class="card-content">
+                    <div class="image">
+                        <img class="card-img-top" src="data:image/jpeg;base64,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" alt="">
+                    </div>
+                    <div class="name-profession">
+                      <span class="name">Urvakonda</span>
+                      <span class="profession">Search Lands in Division</span>
+                    </div>
+                    <form action="{% url 'search' %}">
+                      <!-- Form Row 1 -->
+                      <div class="form-row">
+                        <div class="col-md-12 mb-1">
+                          <select name="state" class="form-control" id="type">
+                            <option selected="true" disabled="disabled" value="">Mandals</option>
+                            <option value="UKM" selected>All Mandals</option>
+                            <option value="UKD">Urvakonda</option>
+                            <option value="VPK">Vidapanakal</option>
+                            <option value="VJR">Vajrakarur</option>
+                            <option value="BG">Beluguppa</option>
+                            <option value="KDR">Kudair</option>
+                          </select>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                          <label class="sr-only">Lands Type</label>
+                          <select name="type" class="form-control">
+                            <option selected="true" disabled="disabled">Lands</option>
+                            <option value="">All Lands</option>
+                            {% for key,value in type_choices.items %}
+                              <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                          <div class="input-group">
+                              <select name="price" class="form-control" id="type">
+                                <option selected="true" disabled="disabled">Price</option>
+                                <option value="">All Prices</option>
+                                {% for key,value in price_choices.items %}
+                                  <option value="{{ key }}">{{ value }}</option>
+                                {% endfor %}
+                              </select>
+                              <div class="input-group-append">
+                                        <button class="btn btn-secondary mt-0" type="submit"><i class="fa fa-search"></i> Search</button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+            </div>
+            <div class="swiper-slide card">
+                <div class="card-content">
+                    <div class="image">
+                        <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/KalyanadurgHills.jpg/250px-KalyanadurgHills.jpg" alt="">
+                    </div>
+                    <div class="name-profession">
+                      <span class="name">Kalyanadurgam</span>
+                      <span class="profession">Search Lands in Division</span>
+                    </div>
+                    <form action="{% url 'search' %}">
+                      <!-- Form Row 1 -->
+                      <div class="form-row">
+                        <div class="col-md-12 mb-1">
+                          <select name="state" class="form-control" id="type">
+                            <option selected="true" disabled="disabled" value="">Mandals</option>
+                            <option value="KDM" selected>All Mandals</option>
+                            <option value="KYD">Kalyanadurgam</option>
+                            <option value="DHL">Brahmsamudram</option>
+                            <option value="ST">Settur</option>
+                            <option value="KDP">Kundrupi</option>
+                            <option value="KBD">Kambdur</option>
+                          </select>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                          <label class="sr-only">Lands Type</label>
+                          <select name="type" class="form-control">
+                            <option selected="true" disabled="disabled">Lands</option>
+                            <option value="">All Lands</option>
+                            {% for key,value in type_choices.items %}
+                              <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                          <div class="input-group">
+                              <select name="price" class="form-control" id="type">
+                                <option selected="true" disabled="disabled">Price</option>
+                                <option value="">All Prices</option>
+                                {% for key,value in price_choices.items %}
+                                  <option value="{{ key }}">{{ value }}</option>
+                                {% endfor %}
+                              </select>
+                              <div class="input-group-append">
+                                        <button class="btn btn-secondary mt-0" type="submit"><i class="fa fa-search"></i> Search</button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+            </div>
+            <div class="swiper-slide card">
+                <div class="card-content">
+                    <div class="image">
+                        <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Temple%2Crayadurg%2Candhrapradesh_-_panoramio.jpg/250px-Temple%2Crayadurg%2Candhrapradesh_-_panoramio.jpg" alt="">
+                    </div>
+                    <div class="name-profession">
+                      <span class="name" >Rayadurgam </span>
+                      <span class="profession">Search Lands in Division</span>
+                    </div>
+                    <form action="{% url 'search' %}">
+                      <!-- Form Row 1 -->
+                      <div class="form-row">
+                        <div class="col-md-12 mb-1">
+                          <select name="state" class="form-control" id="type">
+                            <option selected="true" disabled="disabled" value="">Mandals</option>
+                            <option value="RDM" selected>All Mandals</option>
+                            <option value="RDG">Rayadurgam</option>
+                            <option value="DH">D.Hirehal</option>
+                            <option value="GMG">Gummagatta</option>
+                            <option value="KK">Kanekallu</option>
+                            <option value="BH">Bommanahal</option>
+                          </select>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                          <label class="sr-only">Lands Type</label>
+                          <select name="type" class="form-control">
+                            <option selected="true" disabled="disabled">Lands</option>
+                            <option value="">All Lands</option>
+                            {% for key,value in type_choices.items %}
+                              <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                          <div class="input-group">
+                              <select name="price" class="form-control" id="type">
+                                <option selected="true" disabled="disabled">Price</option>
+                                <option value="">All Prices</option>
+                                {% for key,value in price_choices.items %}
+                                  <option value="{{ key }}">{{ value }}</option>
+                                {% endfor %}
+                              </select>
+                              <div class="input-group-append">
+                                        <button class="btn btn-secondary mt-0" type="submit"><i class="fa fa-search"></i> Search</button>
+
+                              </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+
+</section>
+
+<!-- Swiper JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper(".mySwiper", {
+      loop: true,
+      loopFillGroupWithBlank: true,
+      centeredSlides: false,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      slidesPerView: "auto",
+      spaceBetween: 5,
+      slidesPerGroup: 1,
+      breakpoints: {
+      0: {
+        slidesPerView: 1,
+        spaceBetween: 10,
+      },
+      480: {
+        slidesPerView: 1,
+        spaceBetween: 10,
+      },
+      640: {
+        slidesPerView: 3,
+        spaceBetween: 50,
+      }
+    },
+    });
+</script>
+
+
+<!--Start Search Section   -->
+<!--Endings Search Section -->
+
+<!-- Starts Showcase -->
+<!-- Ending Showcase -->
+<br>
+  <!-- Alerts -->
+  {% include 'partials/_alerts.html' %}
+
+<!-- Listings -->
+
+<!-- Starts Listings Slider -->
+<section id="listings_slider" class="py-5">
+    <div class="container">
+        <h3 class="text-left mb-3 underline-small">Latest Listings
+            <a href="{% url 'search' %}" class="btn bg-success"><i class="fa fa-arrow-right"></i></a>
+        </h3>
+        <div class="owl-carousel list_slider owl-theme">
+            {% if listings %}
+             {% for listing in listings %}
+                <div class="card listing-preview">
+                    <img class="card-img-top " src="{{ listing.photo_main.url }}" alt="" >
+                    <div class="card-img-overlay">
+                      <h2>
+                        <span class="badge badge-secondary text-white">Rs {{ listing.price | intcomma }}</span>
+                      </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="listing-heading ">
+                        <h4 class="text-primary">{{ listing.title }}</h4>
+                        <p>
+                          <i class="fas fa-map-marker text-secondary"></i> {{ listing.city }} </p>
+                        </div>
+                        <hr>
+                        <div class="row py-2 text-secondary">
+                        <div class="col-6">
+                          <i class="fas fa-th-large"></i> Sqft: {{ listing.sqft }}</div>
+                        <div class="col-6">
+                          <i class="fas fa-car"></i> Road: {{ listing.garage }}</div>
+                        </div>
+                        <div class="row py-2 text-secondary">
+                        <div class="col-6">
+                          <i class="fas fa-bed"></i> Acres: {{ listing.bedrooms }}</div>
+                        <div class="col-6">
+                          <i class="fas fa-bath"></i> Water: {{ listing.bathrooms }}</div>
+                        </div>
+                        <hr>
+                        <a href="{% url 'listing' listing.id %}" class="btn btn-primary btn-block">More Info</a>
+                        </div>
+                </div>
+
+             {% endfor %}
+
+            {% else %}
+                <div class="item">
+                    <p>No Listings Available</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<!-- Ending Listings Slider -->
+
+<!--Start Agriculture Lands Details Slider-->
+<section id="al_slider">
+    <div class="container">
+     <h4 class="text-left mb-2 underline-small">Agriculture Lands
+        <a href="{% url 'landtype' 'AL' %}" class="btn bg-success"><i class="fa fa-arrow-right"></i></a>
+     </h4>
+     <div class="owl-carousel agri_l owl-theme">
+     {% if al_listings %}
+      {% for listing in al_listings %}
+        <div class="item">
+            <div class="card listing-preview">
+                <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="" height="100px">
+                <div class="card-img-overlay">
+                  <h2>
+                    <span class="badge badge-secondary text-white">Rs {{ listing.price | intcomma }}</span>
+                  </h2>
+                </div>
+                <div class="card-body">
+                  <a href="{% url 'listing' listing.id %}" class="btn btn-primary btn-block">{{ listing.city }}</a>
+                </div>
+            </div>
+        </div>
+      {% endfor %}
+     {% else %}
+          <div class="item">
+            <p>No Listings Available</p>
+          </div>
+     {% endif %}
+     </div>
+    </div>
+</section>
+<!--End Agriculture Lands Details Slider-->
+<br>
+<!--Start Venture Plots Details Slider-->
+<section id="vp_slider">
+    <div class="container">
+     <h4 class="text-left mb-3 underline-small">Venture Plots
+        <a href="{% url 'landtype' 'VP' %}" class="btn bg-success"><i class="fa fa-arrow-right"></i></a>
+     </h4>
+     <div class="owl-carousel venture_p owl-theme">
+     {% if vp_listings %}
+      {% for listing in vp_listings %}
+        <div class="item">
+            <div class="card listing-preview">
+                <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="" height="100px">
+                <div class="card-img-overlay">
+                  <h2>
+                    <span class="badge badge-secondary text-white">Rs {{ listing.price | intcomma }}</span>
+                  </h2>
+                </div>
+                <div class="card-body">
+                  <a href="{% url 'listing' listing.id %}" class="btn btn-primary btn-block">{{ listing.city }}</a>
+                </div>
+            </div>
+        </div>
+      {% endfor %}
+     {% else %}
+          <div class="item">
+            <p>No Listings Available</p>
+          </div>
+     {% endif %}
+
+     </div>
+    </div>
+</section>
+<!--End Venture Plots Details Slider-->
+<br>
+
+<!--Start Open Plots Details Slider-->
+<section id="cl_slider">
+    <div class="container">
+     <h4 class="text-left underline-small">Commercial Lands
+     <a href="{% url 'landtype' 'CL' %}" class="btn bg-success"><i class="fa fa-arrow-right"></i></a>
+     </h4>
+     <div class="owl-carousel comm_l owl-theme">
+     {% if cl_listings %}
+      {% for listing in cl_listings %}
+        <div class="item">
+            <div class="card listing-preview">
+                <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="" height="100px">
+                <div class="card-img-overlay">
+                  <h2>
+                    <span class="badge badge-secondary text-white">Rs {{ listing.price | intcomma }}</span>
+                  </h2>
+                </div>
+                <div class="card-body">
+                  <a href="{% url 'listing' listing.id %}" class="btn btn-primary btn-block">{{ listing.city }}</a>
+                </div>
+            </div>
+        </div>
+      {% endfor %}
+     {% else %}
+          <div class="item">
+            <p>No Listings Available</p>
+          </div>
+     {% endif %}
+
+     </div>
+    </div>
+</section>
+<!--End Open Plots Details Slider-->
+<br>
+<!--Start Farm House Lands Details Slider-->
+<section id="fh_slider">
+    <div class="container">
+     <h4 class="text-left mb-3 underline-small">Farm House Lands
+        <a href="{% url 'landtype' 'FH' %}" class="btn bg-success"><i class="fa fa-arrow-right"></i></a>
+     </h4>
+     <div class="owl-carousel farm_h owl-theme">
+     {% if fh_listings %}
+      {% for listing in fh_listings %}
+        <div class="item">
+            <div class="card listing-preview">
+                <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="" height="100px">
+                <div class="card-img-overlay">
+                  <h2>
+                    <span class="badge badge-secondary text-white">Rs {{ listing.price | intcomma }}</span>
+                  </h2>
+                </div>
+                <div class="card-body">
+                  <a href="{% url 'listing' listing.id %}" class="btn btn-primary btn-block">{{ listing.city }}</a>
+                </div>
+            </div>
+        </div>
+      {% endfor %}
+     {% else %}
+          <div class="item">
+            <p>No Listings Available</p>
+          </div>
+     {% endif %}
+
+     </div>
+    </div>
+</section>
+<!--End Farm House Lands Details Slider-->
+<br>
+<!--Start House Property Details Slider-->
+<section id="hr_slider">
+    <div class="container">
+     <h4 class="text-left mb-3 underline-small">House Property
+        <a href="{% url 'landtype' 'HR' %}" class="btn bg-success"><i class="fa fa-arrow-right"></i></a>
+     </h4>
+     <div class="owl-carousel house_r owl-theme">
+     {% if hr_listings %}
+      {% for listing in hr_listings %}
+        <div class="item">
+            <div class="card listing-preview">
+                <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="" height="100px">
+                <div class="card-img-overlay">
+                  <h2>
+                    <span class="badge badge-secondary text-white">Rs {{ listing.price | intcomma }}</span>
+                  </h2>
+                </div>
+                <div class="card-body">
+                  <a href="{% url 'listing' listing.id %}" class="btn btn-primary btn-block">{{ listing.city }}</a>
+                </div>
+            </div>
+        </div>
+      {% endfor %}
+     {% else %}
+          <div class="item">
+            <p>No Listings Available</p>
+          </div>
+     {% endif %}
+     </div>
+    </div>
+</section>
+<!--End House Flats Details Slider-->
+<br>
+<!--Start Services Details-->
+<section id="services" class="py-5 bg-secondary text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-4">
+          <i class="fas fa-home fa-4x mr-4"></i>
+          <hr>
+          <h3>Online Lands Management </h3>
+          <p>Professionally listings all the available Agriculture Lands, Venture plots, individual plots, commercial and residential properties in Anantapur district.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-suitcase fa-4x mr-4"></i>
+          <hr>
+          <h3>Purchasing and Selling</h3>
+          <p>We are created online platform for purchasing, leasing and selling the lands over Online.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-comment fa-4x mr-4"></i>
+          <hr>
+          <h3>Consulting Services</h3>
+          <p>Our Consuting services helping the buyer and sellers.We bringing together all the Agriculture lands, Venture plots owners and buyers.</p>
+        </div>
+
+      </div>
+    </div>
+</section>
+<!--Ending Services Details-->
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'landbook/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+
+
+{% block title %} | Profile Edit {% endblock %}
+
+{% block content1 %}
+<br><br>
+
+  <style>
+      #profile_edit .form-data {
+        width: 100%;
+        max-width: 35rem;
+        margin-top: 1rem;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+      }
+
+      #profile_edit .form-data form {
+        background-color: #fff;
+        border: 2px solid #eee;
+        display: flex;
+        flex-direction: column;
+        padding: 2rem 1rem;
+        text-align: left;
+      }
+
+      #profile_edit .logo img {
+        width: 17.5rem;
+        margin-bottom: 2.5rem;
+      }
+
+      #profile_edit .form-data form input {
+        padding: .8rem;
+        margin-bottom: .5rem;
+        border: 2px solid #eee;
+        border-radius: .4rem;
+      }
+    
+  </style>
+
+  <section id="profile_edit">
+    <div class="container">
+      <div class="phone-app-ddemo"></div>
+      <div class="form-data">
+        <form action="" method="POST" enctype="multipart/form-data">
+			{% csrf_token %}
+          <div class="logo" style="width: 200px;">
+            <h3 >Edit Profile</h3>
+          </div>
+          {{form.image}} <br>
+		  {{form.first_name}} <br>
+		  {{form.last_name}} <br>
+		  {{form.bio}} <br>
+		  {{form.location}} <br>
+		  {{form.url}} <br>
+          <button class="btn btn-primary form-btn" type="submit">Update Profile</button>
+          <!-- <a href="index.html" class="form-btn" type="submit">Log in</a> -->
+          
+        </form>
+        
+      </div>
+    </div>
+
+    
+
+  </section>
+
+
+{% endblock content1 %}

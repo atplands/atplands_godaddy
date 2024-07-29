@@ -1,0 +1,44 @@
+{% extends 'landbook/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+
+
+{% block title %} | tags {% endblock %}
+
+{% block content1 %}
+
+   
+    <!-- External CSS Files -->
+<section id="tag_data">
+    <div class="container " >
+        <div>
+            <p class="h4 text-success" style="text-align:center; font-weight: bold;">#{{tag.title|title}}</p>
+            <hr>
+        </div>
+        
+        <div class=" row d-flex justify-content-left border border-success" style="overflow:auto" >
+            {% for post in posts %}
+            <a href="{{post.get_absolute_url}}" class="p-1" style="max-width:310px">
+                <div class="gallery-item " tabindex="0"  >
+                    <img src="{{ post.picture.url }}" class="gallery-image" alt=""  >
+                    <div class="gallery-item-info" >
+                        <ul>
+                            <li class="gallery-item-likes" style="font-size: 10px;"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> {{post.likes}}</li>
+                            <li class="gallery-item-comments" style="font-size: 10px;"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> {{post.comment.count}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <!-- End of gallery -->
+    </div>
+</section>
+
+
+
+
+
+{% endblock content1 %}

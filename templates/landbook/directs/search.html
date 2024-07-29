@@ -1,0 +1,138 @@
+{% extends 'landbook/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} | User Search| {% endblock %}
+{% block content1 %}  
+ 
+<style>
+    /* Side Menu */
+    .side-menu {
+        max-width: 290px;
+        position: fixed;
+        left: 50%; top: 84px;
+        transform: translateX(calc(-50% + 322px));
+        display: none;
+        flex-direction: column;
+    }
+
+    .side-menu__user-profile {
+        display: flex;
+        align-items: center;
+
+        margin: 20px 0 22px;
+    }
+    .side-menu__user-avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        margin-right: 12px;
+        flex-shrink: 0;
+        overflow: hidden;
+        position: relative;
+    }
+    .side-menu__user-avatar::after {
+        content: '';
+        position: absolute;
+        top: 0; bottom: 0;
+        left: 0; right: 0;
+        border: 1px solid var(--img-border);
+        border-radius: 50%;
+    }
+    .side-menu__user-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        flex: 1;
+        gap: 4px;
+    }
+    .side-menu__user-info a {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-dark);
+        text-decoration: none;
+
+        max-width: 180px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    .side-menu__user-info span {
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--text-light);
+        max-width: 180px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    .side-menu__user-button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--link);
+        flex-shrink: 0;
+    }
+
+
+</style>
+
+<section id="usersearch">
+    <div class="container">
+      <div class="phone-app-demo"></div>
+      <div class="form-data">
+        
+        <form action="" method="GET">
+            {% csrf_token %}
+            <div class="headedr__search">
+                <input type="text" placeholder="Search" name="q" value="{{ request.GET.q }}">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </form>
+
+        <div >
+          <div >
+            <h3 style="padding-top: 5px; font-size: 20px; height: fit-content;">Search Results</h3>
+          </div>
+
+        {% for user in users %}
+            <div class="side-menu__user-profile row" >
+
+                <a href="{% url 'profile' user.username %}" class="side-menu__user-avatar col-6 ">
+                    {% if user.profile.image.url %}
+                    <img src="{{ user.profile.image.url }}" alt="User Picture" class="rounded-circle" >
+                    {% else %}
+                    <img src="{% static 'img/default.jpg' %}" alt="User Picture" class="rounded-circle">
+                    {% endif %}
+                </a>
+                <div class="side-menu__user-info col-6 " >
+                    {% if user.profile.first_name %}
+                    <a href="{% url 'profile' user.username %}" style="font-size: 15px; color: black; text-align: center;">{{user.profile.first_name|title }} {{user.profile.last_name|title }}</a>
+                    {% else%}
+                    <a href="{% url 'profile' user.username %}">ATPLands User</a>
+
+                    {% endif %}
+                    
+                    <span style="font-size: 14px;">@{{user.username}}</span>
+                   
+                    <a href="{% url 'profile' user.username %}" style="color: blue;" class="side-menu__user-button">View Profile</a>
+
+                </div>
+            </div>
+            <!-- <hr> -->
+        {% endfor %}
+        
+        </div> 
+        
+        
+      </div>
+    </div>
+
+    
+
+</section >
+
+
+{% endblock content1 %}

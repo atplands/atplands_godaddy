@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block title %} | Browse Property Listings {% endblock %}
+
+{% block content %} 
+
+
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'index' %}">
+              <i class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item active"> Map Listings</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+
+<!-- Map Listings -->
+  <section id="maps" >
+   <div class="container"; style="height: 4500px  ; width: 100%;">
+	    {{ map1 | safe}}
+   </div>
+
+
+  </section>
+  
+{% endblock %}

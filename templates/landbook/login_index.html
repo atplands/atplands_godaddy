@@ -1,0 +1,411 @@
+{% extends 'landbook/base.html' %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% block title %} | Anantapur | Instabook {% endblock %}
+
+{% block content1 %}
+
+<style>
+   .d-flex.row_scroll::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  /* Track */
+  .d-flex.row_scroll::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  .d-flex.row_scroll::-webkit-scrollbar-thumb {
+    background: rgb(92, 124, 74); 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  .d-flex.row_scroll::-webkit-scrollbar-thumb:hover {
+    background: green
+  }
+</style>
+
+
+
+<section id="lb_insta_index">
+          
+        <div class="container-md instaFeedBodyWrap" style="margin-top: 0px;">
+            <div class="row g-0">
+                <div class="col-sm-8">
+                    <div>
+                        <div class="card card-body mb-3 horizontal-scrollable">
+                            <div class="d-flex row_scroll" style="overflow: auto; white-space: nowrap; height: 110px;">
+                                {% for story1 in stories %}
+                                <div class="d-flex align-items-center flex-column ">
+                                    <a href="" data-toggle="modal" data-target="#carouselModal{{story1.stream_title}}" style="text-align: center;">
+                                        <img src="{{ story1.image.url }}" class="profileImageList mb-2"
+                                            style="border-radius: 100%;  max-width: 60px; height: 60px; border: 2px solid #f00;  padding: 2px;">
+                                        <h6 class="mb-0 ms-2"> {{story1.stream_title}} </h6>
+
+                                    </a>
+                                </div>
+                                
+                                <section id="ads_slider">
+                                    <!-- Inquiry Modal -->
+                                    <div class="modal fade" id="carouselModal{{story1.stream_title}}" role="dialog" aria-labelledby="carouselModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h5 class="modal-title" id="carouselModalLabel">{{story1.stream_title}}</h5>
+                                            <button type="button" class="close" data-dismiss="modal">
+                                                <span>&times;</span>
+                                            </button>
+                                                
+                                            </div>
+                                            <div class="modal-body">                                          
+
+
+                                                <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                                                    
+                                                    <div class="carousel-inner">
+                                                        <div class="carousel-item active">
+                                                            <img src="{{story1.image.url}}" class="d-block w-100 img-responsive">
+                                                        </div>
+                                                        {% if story1.storys %}
+                                                            {% for story in story1.storys.all %}
+                                                            <div class="carousel-item">
+                                                                <img src="{{ story.content.url }}" class="d-block w-100" alt="{{ story.content.url }}" id="story_url" name="{{ story.caption }}">
+                                                                <div class="carousel-caption  d-md-block">
+                                                                    <h5>{{ story.caption }}</h5>
+                                                                    <p>{{ story.story_details }}</p>
+                                                                </div>
+                                                            </div>
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    </div>
+                                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: lightskyblue ;"></span>
+                                                        <span class="visually-hidden">Previous</span>
+                                                    </button>
+                                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next" >
+                                                        <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: lightskyblue ;"></span>
+                                                        <span class="visually-hidden">Next</span>
+                                                    </button>
+                                                  </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <h6 class="modal-title" id="carouselModalLabel1">{{story1.stream_title}}</h6>
+                                                
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+
+                        {% for post in post_items %}
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center">                                        
+                                                                                    
+                                            {% if post.user.profile.image %}
+                                            <a href="{{post.user.profile.image.url}}" class="post__avatar">                                                
+                                                <img src="{{post.user.profile.image.url}}" alt="User Picture" class="profileImage"
+                                                    style="border-radius: 100%; max-width: 80px;">                                                
+                                            </a>
+                                            {% endif %}                                            
+                                                                            
+                                        <h6 class="mb-0 ms-2">{{ post.user.username }}</h6>
+                                    </div>
+                                    <div>
+                                        <i class="fas fa-ellipsis"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body p-0">
+                                <a href="{% url 'post-details' post.id %}"><img class="mw-100" src="{{ post.picture.url }}" alt="Post Content" style=" object-fit: cover;"></a>
+                                
+                            </div>
+                            <div class="card-footer">
+                                
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div>
+                                        
+                                        <a href="{% url 'like' post.id %}" class="post__button"
+                                        style="background-color: transparent;border: none; cursor: pointer; padding: 0px;">
+                                            <i class="fas fa-heart fs-3"></i>
+                                        </a>
+                                        <span>{{post.likes}} <b class="post__name--underline" >likes</b></span>
+                                        
+                                    </div>
+                                    <div>                                        
+                                        <i class="fas fa-comment fs-3"></i>
+                                        <i class="fas fa-paper-plane fs-3"></i>
+                                    </div>                                     
+                                    <div>
+                                        
+                                        <span> <b class="post__name--underline" > favourite</b>
+                                            <a href="{% url 'favourite' post.id %}" class="post__button post__button--align-right" style="margin-left: auto;background-color: transparent;border: none; cursor: pointer; padding: 0px;">
+                                                <i class="fas fa-bookmark fs-3"> </i>
+                                            </a>
+                                        </span>
+                                    </div>
+                                    
+                                    
+                                </div>
+                                <div class="post__infos">
+                                    <div class="post__description">
+                                        <span>
+                                            <a  {% if user.is_authenticated %}
+                                            href="{% url 'profile' post.user %}"
+                                            {% else %}
+                                                href="#" data-toggle="modal" data-target="#postloginModal"
+                                            {% endif %}
+                                                class=""> 
+                                           
+                                                <b>@{{post.user.username}}</b>
+                                            </a>
+                                            {{post.caption}}
+                                        </span>
+                                    </div>
+                                    <div >
+                                        <p style="font-size: 13px;">
+                                            {% for tag in post.tags.all %}
+                                            <a href="{{ tag.get_absolute_url }}" style="text-decoration: none;">
+                                                #{{ tag }}
+                                            </a>
+                                            {% endfor %}
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <small class="post__date-time">{{post.posted}}</small>                                
+                                <div class="d-flex align-items-center mt-3">
+                                    <div>
+                                        <a  {% if user.is_authenticated %}
+                                            href="{% url 'post-details' post.id %}"
+                                            {% else %}
+                                                href="#" data-toggle="modal" data-target="#postloginModal"
+                                            {% endif %}
+                                                class=""> 
+                                            <i class="fas fa-comment fs-3"></i>
+                                        </a>
+                                    </div>
+                                    <div class="flex-fill mx-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div>
+                                        <a  {% if user.is_authenticated %}
+                                            href="{% url 'post-details' post.id %}"
+                                            {% else %}
+                                                href="#" data-toggle="modal" data-target="#postloginModal"
+                                            {% endif %}
+                                                class=""> 
+                                            
+                                            <button class="btn btn-default">Send</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        
+                    </div>
+			<div>
+                        
+                        {% if post_items|length == 0  %}
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class=" align-items-center">  
+                                        <h6 class="mb-0 ms-2 text-Primary">{{ "You are not having any Stories to display." }}</h6>
+                                        <h6 class="mb-0 ms-2 text-info">{{ "Please Follow the Users to display his posted Stories . " }}</h6>
+                                    </div>
+                                    <div>
+                                        <i class="fas fa-ellipsis"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                </div>
+                <div class="col-sm-4">
+                    <div>
+                        <div>
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-5">
+                                   
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-2">
+                                            <img src="{{ request.user.profile.image.url }}" class="profileImage" style=" border-radius: 100%;  max-width: 40px;">
+                                        </div>
+                                        <div>                                            
+                                            {% if user.profile.first_name %}
+                                            <a href="{% url 'profile' request.user %} ">
+                                                <div>
+                                                    {{request.user.profile.first_name|title }} {{request.user.profile.last_name|title }}                  
+                                                </div>
+                                                <div>
+                                                    <small class="text-secondary">{{request.user.profile.first_name|title }} {{request.user.profile.last_name|title }}</small>
+                                                </div>
+                                            </a>
+                                            {% else %}
+                                            <a href="{% url 'profile' request.user %} ">
+                                                <div>
+                                                    <small class="text-secondary">{{user.username}}</small>
+                                                </div>
+                                            </a> 
+                                            {% endif %}
+                                            <span>@{{request.user.username}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="text-primary">Switch</div>
+                                    
+                                </div>
+                                
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="fw-bold">Suggestions For You</div>
+                                <div>See All</div>
+                            </div>
+                            <div>
+                                {% for user in all_users %}
+                                    
+                                   {% if request.user.username != user.username %}
+                                    <div class="d-flex align-items-center justify-content-between my-2 ml-1">
+                                        <div class="d-flex align-items-center">
+                                            <div class="me-2">
+                                                <a  {% if user.is_authenticated %}
+                                                        href="{% url 'profile' user %}" 
+                                                    {% else %}
+                                                        href="#" data-toggle="modal" data-target="#postloginModal"
+                                                    {% endif %}
+                                                        class="profileImgSm">
+                                                        <img src="{{user.profile.image.url}}" alt="User Picture"
+                                                        style="border-radius: 100%;max-width: 40px;">
+                                                </a>
+                                                
+                                            </div>
+                                            <div>                                            
+                                                {% if user.profile.first_name %}
+                                                <a  {% if user.is_authenticated %}  
+                                                    href="{% url 'profile' user %} "
+                                                    {% else %}
+                                                        href="#" data-toggle="modal" data-target="#postloginModal"
+                                                    {% endif %} 
+                                                        class="">
+                                                    <div>{{user.profile.first_name|title }} {{user.profile.last_name|title }}                  
+                                                    </div>
+                                                    <div>
+                                                        <small class="text-secondary"><span>@{{user.username}}</span></small>
+                                                    </div>
+                                                </a>
+                                                {% else %}
+                                                <a  {% if user.is_authenticated %}
+                                                    href="{% url 'profile' user %} "
+                                                    {% else %}
+                                                        href="#" data-toggle="modal" data-target="#postloginModal"
+                                                    {% endif %} 
+                                                        class="">
+                                                    <div>{{user.username}}                 
+                                                    </div>
+                                                    <div>
+                                                        <small class="text-secondary"><span>@{{user.username}}</span></small>                                                    
+                                                    </div>
+                                                </a> 
+                                                {% endif %}
+                                                
+                                            </div>
+                                        </div>
+    
+                                        <div class="text-primary">
+                                            {% if follow_status == True %}
+                                            <a  {% if user.is_authenticated %}
+                                                href="{% url 'follow' user 0 %}"
+                                                {% else %}
+                                                    href="#" data-toggle="modal" data-target="#postloginModal"
+                                                {% endif %} 
+                                                    class="side-menu__suggestion-button">Follow</a>
+                                            {% else %}
+                                            <a  {% if user.is_authenticated %}
+                                                href="{% url 'follow' user 1 %}"
+                                                {% else %}
+                                                    href="#" data-toggle="modal" data-target="#postloginModal"
+                                                {% endif %} 
+                                                class="side-menu__suggestion-button">Follow</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
+                                
+    
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-5">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {% if all_users.has_other_pages %}
+                                        <ul class="pagination">
+                                            {% if all_users.has_previous %}
+                                            <li class="page-item">
+                                                <a href="?page={{all_users.previous_page_number}}" class="page-link">&laquo;</a>
+                                            </li>
+                                            {% else %}
+                                            <li class="page-item disabled">
+                                                <a class="page-link">&laquo;</a>
+                                            </li>
+                                            {% endif %}
+                                            {% for i in all_users.paginator.page_range %}
+                                            {% if all_users.number == i %}
+                                                <li class="page-item active">
+                                                <a class="page-link">{{i}}</a>
+                                                </li>
+                                            {% else %}
+                                                <li class="page-item">
+                                                <a href="?page={{i}}" class="page-link">{{i}}</a>
+                                                </li>
+                                            {% endif %}
+                                            {% endfor %}
+                                            {% if all_users.has_next %}
+                                            <li class="page-item">
+                                                <a href="?page={{all_users.next_page_number}}" class="page-link">&raquo;</a>
+                                            </li>
+                                            {% else %}
+                                            <li class="page-item disabled">
+                                                <a class="page-link">&raquo;</a>
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+    
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+</section>
+
+      
+
+    
+<script>
+    $(document).ready(function () {
+        var hello = document.getElementById("story_url").getAttribute("name")
+        $("#carouselModalLabel2").append('<p>'+hello+'</p>');
+    });
+</script>
+       
+<!--Ending Services Details-->
+{% endblock content1 %}

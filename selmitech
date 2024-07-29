@@ -1,0 +1,16 @@
+server {
+    listen 80;
+    server_name atplands.com www.atplands.com;
+    location = /favicon.ico { access_log off; log_not_found off; }
+    
+    location /static/ {
+        root /home/mbesthc/selmitech;
+    }
+    location /media/ {
+        root /home/mbesthc/selmitech;
+    }
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/mbesthc/selmitech/realestate.sock;
+    }
+}

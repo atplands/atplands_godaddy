@@ -1,0 +1,496 @@
+{% extends 'landbook/base.html' %}
+{% load static %}
+{% block title %} | User Profile | {% endblock %}
+{% block content1 %}
+
+<style>
+            /* Profile Section */
+
+            .profile {
+                padding: 5rem 0;
+            }
+
+            .profile::after {
+                content: "";
+                display: block;
+                clear: both;
+            }
+
+            .profile-image {
+                float: left;
+                width: calc(33.333% - 1rem);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-right: 3rem;
+            }
+
+            .profile-image img {
+                border-radius: 50%;
+            }
+
+            .profile-user-settings,
+            .profile-stats,
+            .profile-bio {
+                float: left;
+                width: calc(66.666% - 2rem);
+            }
+
+            .profile-user-settings {
+                margin-top: 1.1rem;
+            }
+
+            .profile-user-name {
+                display: inline-block;
+                font-size: 3.2rem;
+                font-weight: 300;
+            }
+
+            .profile-edit-btn {
+                font-size: 1.4rem;
+                line-height: 1.8;
+                border: 0.1rem solid #dbdbdb;
+                border-radius: 0.3rem;
+                padding: 0 2.4rem;
+                margin-left: 2rem;
+            }
+
+            .profile-settings-btn {
+                font-size: 2rem;
+                margin-left: 1rem;
+            }
+
+            .profile-stats {
+                margin-top: 2.3rem;
+            }
+
+            .profile-stats li {
+                display: inline-block;
+                font-size: 1.6rem;
+                line-height: 1.5;
+                margin-right: 4rem;
+                cursor: pointer;
+            }
+
+            .profile-stats li:last-of-type {
+                margin-right: 0;
+            }
+
+            .profile-bio {
+                font-size: 1.6rem;
+                font-weight: 400;
+                line-height: 1.5;
+                margin-top: 2.3rem;
+            }
+
+            .profile-real-name,
+            .profile-stat-count,
+            .profile-edit-btn {
+                font-weight: 600;
+            }
+
+            /* Gallery Section */
+
+            .gallery {
+                display: flex;
+                flex-wrap: wrap;
+                margin: -1rem -1rem;
+                padding-bottom: 3rem;
+            }
+
+            .gallery-item {
+                position: relative;
+                flex: 1 0 22rem;
+                margin: 1rem;
+                color: #fff;
+                cursor: pointer;
+            }
+
+            .gallery-item:hover .gallery-item-info,
+            .gallery-item:focus .gallery-item-info {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.3);
+            }
+
+            .gallery-item-info {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.3);
+            }
+
+            .gallery-item-info {
+                display: none;
+            }
+
+            .gallery-item-info li {
+                display: inline-block;
+                font-size: 1.7rem;
+                font-weight: 600;
+            }
+
+            .gallery-item-likes {
+                margin-right: 2.2rem;
+            }
+
+            .gallery-item-type {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                font-size: 2.5rem;
+                text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
+            }
+
+            .fa-clone,
+            .fa-comment {
+                transform: rotateY(180deg);
+            }
+
+            .gallery-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            /* Loader */
+
+            .loader {
+                width: 5rem;
+                height: 5rem;
+                border: 0.6rem solid #999;
+                border-bottom-color: transparent;
+                border-radius: 50%;
+                margin: 0 auto;
+                animation: loader 500ms linear infinite;
+            }
+
+            /* Media Query */
+
+            @media screen and (max-width: 40rem) {
+                .profile {
+                    display: flex;
+                    flex-wrap: wrap;
+                    padding: 4rem 0;
+                }
+
+                .profile::after {
+                    display: none;
+                }
+
+                .profile-image,
+                .profile-user-settings,
+                .profile-bio,
+                .profile-stats {
+                    float: none;
+                    width: auto;
+                }
+
+                .profile-image img {
+                    width: 7.7rem;
+                }
+
+                .profile-user-settings {
+                    flex-basis: calc(100% - 10.7rem);
+                    display: flex;
+                    flex-wrap: wrap;
+                    margin-top: 1rem;
+                }
+
+                .profile-user-name {
+                    font-size: 2.2rem;
+                }
+
+                .profile-edit-btn {
+                    order: 1;
+                    padding: 0;
+                    text-align: center;
+                    margin-top: 1rem;
+                }
+
+                .profile-edit-btn {
+                    margin-left: 0;
+                }
+
+                .profile-bio {
+                    font-size: 1.4rem;
+                    margin-top: 1.5rem;
+                }
+
+                .profile-edit-btn,
+                .profile-bio,
+                .profile-stats {
+                    flex-basis: 100%;
+                }
+
+                .profile-stats {
+                    order: 1;
+                    margin-top: 1.5rem;
+                }
+
+                .profile-stats ul {
+                    display: flex;
+                    text-align: center;
+                    padding: 1.2rem 0;
+                    border-top: 0.1rem solid #dadada;
+                    border-bottom: 0.1rem solid #dadada;
+                }
+
+                .profile-stats li {
+                    font-size: 1.4rem;
+                    flex: 1;
+                    margin: 0;
+                }
+
+                .profile-stat-count {
+                    display: block;
+                }
+            }
+
+            /* Grid Feature Query */
+
+            @supports (display: grid) {
+                .profile {
+                    display: grid;
+                    grid-template-columns: 1fr 2fr;
+                    grid-template-rows: repeat(3, auto);
+                    grid-column-gap: 3rem;
+                    align-items: center;
+                }
+
+                .profile-image {
+                    grid-row: 1 / -1;
+                }
+
+                .gallery {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+                    grid-gap: 2rem;
+                }
+
+                .profile-image,
+                .profile-user-settings,
+                .profile-stats,
+                .profile-bio,
+                .gallery-item,
+                .gallery {
+                    width: auto;
+                    margin: 0;
+                }
+
+                @media (max-width: 40rem) {
+                    .profile {
+                        grid-template-columns: auto 1fr;
+                        grid-row-gap: 1.5rem;
+                    }
+
+                    .profile-image {
+                        grid-row: 1 / 2;
+                    }
+
+                    .profile-user-settings {
+                        display: grid;
+                        grid-template-columns: auto 1fr;
+                        grid-gap: 1rem;
+                    }
+
+                    .profile-edit-btn,
+                    .profile-stats,
+                    .profile-bio {
+                        grid-column: 1 / -1;
+                    }
+
+                    .profile-user-settings,
+                    .profile-edit-btn,
+                    .profile-settings-btn,
+                    .profile-bio,
+                    .profile-stats {
+                        margin: 0;
+                    }
+                }
+            }
+
+            /* Loader Animation */
+
+            @keyframes loader {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+        
+</style>
+
+<section id="user_profile">
+    <div class="bg-body">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-12 mt-1 pt-1">
+                    <div class="row z-depth-3 border border-info">
+                        <div class="col-sm-4 border border-info rounded-left">
+                            <div class="card-block text-center text-white" style="max-width: 320px; max-height: 500px;">
+                                <img src="{{profile.image.url}}" alt="" style="width: 210px; height: 200px;" class="rounded-circle fa-7x mt-1 p-0">
+                                {% if profile.first_name %}
+                                <h6 class="" >{{profile.first_name}} {{profile.last_name}}</h6> 
+                                {% endif %}
+                                <h5  class="">@{{profile.user.username}}</h5>
+                                {% if request.user.is_authenticated and request.user == profile.user %}
+                                <a style="text-decoration: none; font-size: 10px;" href="{% url 'editprofile' %}" class="btn profile-edit-btn" >Edit Profile</a>
+                                <a style="text-decoration: none; font-size: 10px;" href="{% url 'sign-out' %}" class="btn profile-edit-btn" >Logout</a>
+                                <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
+
+                                
+                                {% endif %}
+                                
+                                <div class="d-flex  justify-content-center">
+                                    {% if request.user.is_authenticated and request.user != profile.user %}
+                                        {% if follow_status == True %}
+                                            <a href="{% url 'follow' profile.user 0 %}" class="btn " style="color: red; height: 40px;">Unfollow</a> <br><br>
+                                        {% else %}
+                                            <a href="{% url 'follow' profile.user 1 %}" class="btn " style="color: green; height: 40px;">Follow</a> <br><br>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if request.user.is_authenticated and request.user != profile.user %}
+                                            <a href="{% url 'conversation' profile.user  %}" class="btn " style="color: green; height: 40px;">Message</a> <br><br>
+                                    {% endif %}
+                                    <br>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="col-sm-8 bg-white border border-info rounded-right">
+                            <h3 class="mt-3 text-center">User Information</h3>
+                            <hr class="badge-primary mt-0 w-100 text-center">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p class="text-weight-bold">User Bio:</p>
+                                    <h6 class="text-muted">  {{profile.bio}}</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="text-weight-bold">Location:</p>
+                                    <h6 class="text-muted"> {{profile.location}}</h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p class="text-weight-bold">Url:</p>
+                                    <h6 class="text-muted"> <a href="{{profile.url}}">{{profile.url}}</a></h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="text-weight-bold">View Image:</p>
+                                    <h6 class="text-muted"> 
+                                        <a class="btn btn-light" href="{{profile.image.url}}">Image</a>
+                                    </h6>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="row">
+                                {% if contacts %}
+                                <p class="text-weight-bold">Inquired Properties:</p>
+                                <table class="table table-responsive">
+                                  <tbody>
+                                    {% for contact in contacts %}
+                                      <tr>
+                                        <td  class="text-muted">{{ contact.id }}</td>
+                                        <td class="text-muted">{{ contact.listing }}</td>
+                                        <td>
+                                          <a class="btn btn-light btn-sm text-muted" href="{% url 'listing' contact.listing_id %}">View Listing</a>
+                                        </td>
+                                      </tr>
+                                    {% endfor %}
+                                  </tbody>
+                                </table>
+                              {% else %}
+                                <p class="text-weight-bold">You have not made any inquiries</p>
+                              {% endif %}
+                            </div>
+                            <div class="row">
+                                {% if postads %}
+                                    <p class="text-weight-bold" >Posted Ads</p>
+                                    <table class="table table-responsive">
+                                    
+                                    <tbody>
+                                        {% for postad in postads %}
+                                        <tr class="text-muted">
+                                            <td>{{ postad.id }}</td>
+                                            <td>{{ postad.title }}</td>
+                                            <td>{{ postad.message }}</td>
+                                            <td>
+                                            <a class="btn btn-light btn-sm text-muted " href="{{postad.photo_main.url}}" >View Image</a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    </table>
+                                {% else %}
+                                    <p class="text-weight-bold">You have not Posted any property</p>
+                                {% endif %}
+                            </div>
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"><a  href="{% url 'profile' profile.user %}"  class="btns profiele-edit-btn" >Posts</a></th>
+                                                <th scope="col">
+                                                    {% if request.user == profile.user %}
+                                                    <a  href="{% url 'profilefavourite' profile.user %}"  class="btns profeile-edit-btn" >Saved</a>
+                                                    {% endif %}
+                                                </th>
+                                                <th scope="col">                                                    
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                              <td><span class="">{{posts_count}}</span> posts</td>
+                                              <td><span class="">{{followers_count}}</span> followers</td>
+                                              <td><span class="">{{following_count}}</span> following</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="user_posts">
+    <div class="container p-0 mt-1" >
+        <div class="gallery row d-flex justify-content-left border border-success" style="overflow:auto" >
+                
+            {% for post in posts %}
+            <a href="{{post.get_absolute_url}}" class="p-1" style="max-width:310px">
+                <div class="gallery-item " tabindex="0"  >
+                    <img src="{{ post.picture.url }}" class="gallery-image" alt="" style="width:310px;height:200px; obejct-fit:cover;" >
+                    <div class="gallery-item-info" >
+                        <ul>
+                            <li class="gallery-item-likes" style="font-size: 10px;"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> {{post.likes}}</li>
+                            <li class="gallery-item-comments" style="font-size: 10px;"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> {{post.comment.count}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <!-- End of gallery -->
+    </div>
+    
+</section>
+{% endblock content1 %}

@@ -1,0 +1,344 @@
+{% extends 'landbook/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+
+
+{% block title %} | Anantapur {% endblock %}
+
+{% block content1 %}
+<br><br>
+
+<style>
+        
+
+    .date {
+        font-size: 11px
+    }
+
+    .comment-text {
+        font-size: 12px
+    }
+
+    .fs-12 {
+        font-size: 12px
+    }
+
+    .shadow-none {
+        box-shadow: none
+    }
+
+    .name {
+        color: #007bff
+    }
+
+    .cursor:hover {
+        color: blue
+    }
+
+    .cursor {
+        cursor: pointer
+    }
+
+    .textarea {
+        resize: none
+    }
+    /* Post */
+    .post {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .post__header {
+        /*background-color: var(--primary);
+        border-bottom: 1px solid var(--border);*/
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px;
+    }
+    .post__profile {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .post__avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        overflow: hidden;
+        position: relative;
+    }
+    .post__avatar::after {
+        content: '';
+        position: absolute;
+        top: 0; bottom: 0;
+        left: 0; right: 0;
+
+        border: 1px solid var(--img-border);
+        border-radius: 50%;
+    }
+    .post__user {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-dark);
+        text-decoration: none;
+    }
+    .post__user:hover {
+        text-decoration: underline;
+    }
+    .post__more-options {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+    .post__content {
+        display: flex;
+        position: relative;
+    }
+    .post__medias {
+        display: flex;
+        overflow-y: hidden;
+        overflow-x: auto;
+
+        width: 100%;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+    }
+    .post__medias::-webkit-scrollbar {
+        display: none;
+    }
+    .post__media {
+        width: 100%;
+        flex: none;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+    }
+
+    .post__footer {
+        /*background-color: var(--primary);*/
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 0 4px;
+    }
+    .post__buttons {
+        display: flex;
+        position: relative;
+    }
+    .post__button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+
+        padding: 8px;
+    }
+    .post__button--align-right {
+        margin-left: auto;
+    }
+    .post__indicators {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -100%);
+    }
+    .post__indicator {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: var(--text-light);
+    }
+    .post__indicator--active {
+        background-color: var(--link);
+    }
+
+    .post__infos {
+        display: flex;
+        flex-direction: column;
+        padding: 0 8px;
+        gap: 10px;
+    }
+    .post__likes,
+    .post__description {
+        display: flex;
+    }
+    .post__likes {
+        align-items: center;
+        gap: 6px;
+    }
+    .post__likes-avatar {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        overflow: hidden;
+        position: relative;
+    }
+    .post__likes-avatar::after {
+        content: '';
+        position: absolute;
+        top: 0; bottom: 0;
+        left: 0; right: 0;
+
+        border: 1px solid var(--img-border);
+        border-radius: 50%;
+    }
+    .post__likes span,
+    .post__description span {
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--text-dark);
+    }
+    .post__likes a,
+    .post__description a {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-dark);
+        text-decoration: none;
+    }
+    .post__name--underline:hover {
+        text-decoration: underline;
+    }
+    .post__date-time {
+        font-size: 10px;
+        font-weight: 400;
+        color: var(--text-light);
+        text-transform: uppercase;
+    }
+</style>
+
+<section id="post_details">
+    <div class="container">
+        
+    <div class="bg-light">
+        
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-12 mt-1 pt-1">
+                    <div class="row z-depth-3 border border-info">
+                        <div class="col-sm-4 bg-body border border-info rounded-left">
+                            <div class="card-block text-center text-white">
+                                <div class="post__profile">
+                                    <a href="{% url 'profile' post.user %}" class="post__avatar">
+                                        <img src="{{ post.user.profile.image.url }}" alt="User Picture" style="border-radius: 10%; max-width: 50px;">
+                                    </a>
+                                    <a href="{% url 'profile' post.user %}" class="post__user">@{{ post.user.username }}</a>
+                                </div>
+                               
+
+                                <div class="post__medias">
+                                    <a href="{% url 'post-details' post.id %}" style="max-width:400px">
+                                        <img class="post__media" src="{{ post.picture.url }}" alt="Post Content" style="max-width:1000%; object-fit: contain;">
+                                    </a>
+                                </div>                                
+                            </div>
+
+                        </div>
+                        <div class="col-sm-8 bg-white border border-info rounded-right">
+                            <h3 class="mt-3 text-center">Post Details</h3>
+                            <hr class="badge-primary mt-0 w-100 text-center">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p class="text-weight-bold">Post Name:</p>
+                                    <h6 class="text-muted">{{post.caption}}</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="text-weight-bold">Post Username:</p>
+                                    <h6 class="text-muted">@{{post.user.username}}</h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p class="text-weight-bold">Post Like:</p>
+                                    <h6 class="text-muted">{{post.likes}} 
+                                        <a href="{% url 'like' post.id %}" class="post__button">
+                                            <span><i class="fas fa-heart" aria-hidden="true"></i></span>
+                                        </a>
+                                    </h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="text-weight-bold">Post comments:</p>
+                                    <h6 class="text-muted">  {{post.comment.count}}</h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p class="text-weight-bold">tags:</p>
+                                    <h6 >{% for tag in post.tags.all %}
+                                        <a href="{{ tag.get_absolute_url }}" style="text-decoration: none; border-radius: 100%; max-width: 40px;">
+                                            #{{ tag }}
+                                        </a>
+                                        {% endfor %}
+                                    </h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="text-weight-bold">Post Date:</p>
+                                    <h6 class="text-muted"> {{post.posted}}</h6>
+                                </div>
+                            </div>
+                            
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+<section id="post_details_comments">
+    <div class="container mt-1 border border-info">
+        <h4> Post Comments</h4>
+        <hr class="badge-primary mt-0 w-100 text-center">
+        <div class="d-flex justify-content-right row">
+            <div class="col-md-8 col-lg-8">
+                <div class="d-flex flex-column comment-section">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="bg-light p-2">
+                            <!-- {{form|crispy}} -->
+                            <div class="d-flex flex-row user-info">
+                                <img class="rounded-circle" src="{{request.user.profile.image.url}}" style="text-decoration: none; border-radius: 100%; max-width: 40px; width: fit-content;">
+                                {{form.body}}
+                            </div>
+                            <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none" type="submit">Post comment</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div lass="col-md-4 col-lg-4">
+                {% for comment in comments %}
+                <div class="bg-white p-2">
+                    <div class="d-flex flex-row user-info">
+                        <img class="rounded-circle" src="{{comment.user.profile.image.url}}" style="text-decoration: none; border-radius: 100%; max-width: 40px; width: fit-content;">
+                        <a href="{% url 'profile' comment.user %}" style="text-decoration: none;">
+                        <div class="d-flex flex-column justify-content-start ml-1">
+                            <span class="d-block font-weight-bold name">{{comment.user.profile.first_name}} {{comment.user.profile.last_name}}</span><span class="date text-black-50"> {{comment.date}}</span>
+                        </div></a>
+                    </div>
+                    <div class="mt-2">
+                        <p class="comment-text">{{ comment.body }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</section>
+
+    
+
+{% endblock content1 %}
