@@ -25,7 +25,7 @@ SECRET_KEY = 'w6rm%l&xim0ivll-li$u6fg8)6k8-$7uar^f#33ht5sutw8e!#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.169.177.74','atplands.com', 'www.atplands.com',]
+ALLOWED_HOSTS = ['192.169.177.74','atplands.com', 'www.atplands.com','*',]
 
 
 # Application definition
@@ -71,6 +71,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware', #added this line
 ]
 
 ROOT_URLCONF = 'realestate.urls'
