@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn server for atplands.com
+After=network.target
+
+[Service]
+User=mbesthc
+Group=www-data
+WorkingDirectory=/home/mbesthc/selmitech
+Environment=DJANGO_SETTINGS_MODULE=realestate.settings
+ExecStart=/home/mbesthc/selmitech/env/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/mbesthc/selmitech/realestate.sock realestate.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
